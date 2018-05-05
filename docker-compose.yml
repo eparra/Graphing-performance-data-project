@@ -1,0 +1,24 @@
+version: '2'
+services:
+
+    web:
+       build: .
+       restart: always
+       ports:
+       - "0.0.0.0:8030:8000"
+       container_name: graphic-web
+       env_file: .env
+       volumes:
+       - ./:/opt/app
+       working_dir: /opt/app/graphictest
+       #entrypoint: ['tail', '-f', '/dev/null']
+       entrypoint: ['/bin/bash', '../init.sh']
+       links:
+       - db
+
+    db:
+       image: mdillon/postgis:9.4
+       volumes:
+       - ./pgdata:/var/lib/postgresql/data
+       env_file: .env
+       container_name: graphic-db
