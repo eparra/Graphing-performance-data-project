@@ -7,7 +7,8 @@ from django.conf import settings
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.dates import date2num
-from locations.models import Location, Measurement
+from locations.models import Location
+from measurements.models import Measurement
 
 FILE_FORMAT = '{location}-{proxy_name}-{type}.{ext}'
 
