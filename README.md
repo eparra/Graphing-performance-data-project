@@ -12,16 +12,16 @@ We will build two graphs per location.  The first graph will use avg_resp_proxy 
 
 ```
 class Measurement(models.Model):
-    location = models.ForeignKey('locations.Location', on_delete=models.CASCADE)
     proxy            = models.CharField(('proxy'), max_length=10)
     avg_resp_proxy   = models.CharField(('avg_resp_proxy'), max_length=20)
-    avg_avail_proxy  = models.CharField(('Average available proxy'), max_length=20)
+    avg_avail_proxy  = models.CharField(('avg_avail_proxy'), max_length=20)
     avg_resp_direct  = models.CharField(('avg_resp_direct'), max_length=20)
-    avg_avail_direct = models.CharField(('Average available direct'), max_length=20)
-    date             = models.DateField(auto_now=True)
+    avg_avail_direct = models.CharField(('avg_avail_direct'), max_length=20)
+    date             = models.DateField(default=timezone.now)
+    location         = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ('date',)
+        unique_together = ('location', 'date',)
 
     def __str__(self):
         return '{} - {}'.format(self.date, self.location.city)
